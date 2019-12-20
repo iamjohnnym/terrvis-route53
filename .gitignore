@@ -1,0 +1,11 @@
+# sensitive terraform files
+.terraform
+*.tfstate*
+
+# Python files
+.venv
+
+# env files
+.envrc
+
+backupbs/
