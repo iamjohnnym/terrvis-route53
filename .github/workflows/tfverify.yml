@@ -1,0 +1,41 @@
+name: terraform-verify
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  build:
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REGION: ${{ secrets.AWS_REGION }}
+      ENVIRONMENT_NAME: ${{ secrets.ENVIRONMENT_NAME }}
+      PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+      IAM_PGP: ${{ secrets.IAM_PGP }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: marocchino/setup-terraform@v1.0.1
+    - name: Generate R53 Domain Resources
+      run: python3 bin/r53_generator.py
+    - name: Sync terraform states
+      run: |
+        cd ./.terrvis
+        terraform init
+    - name: Validate terraform
+      run: |
+        cd ./.terrvis
+        terraform validate
+    - name: Plan terraform
+      run: |
+        cd ./.terrvis
+        terraform plan -input=false
+

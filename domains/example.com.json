@@ -1,0 +1,44 @@
+{
+    "domain":"example.com",
+    "comment":"Managed by Terrvis",
+    "records": [
+        {
+            "id":"gmail",
+            "subdomain":"",
+            "type":"mx",
+            "ttl":"300",
+            "records":[
+                "10 ALT3.ASPMX.L.GOOGLE.COM","5 ALT2.ASPMX.L.GOOGLE.COM",
+                "5 ALT1.ASPMX.L.GOOGLE.COM","10 ALT4.ASPMX.L.GOOGLE.COM"
+            ]
+        },{
+            "id":"root",
+            "subdomain":"",
+            "type":"a",
+            "ttl":"300",
+            "records":[
+                "185.199.111.153",
+                "185.199.110.153",
+                "185.199.109.153",
+                "185.199.108.153"]
+        },{
+            "id":"pagespeed",
+            "subdomain":"123456",
+            "type":"cname",
+            "ttl":"300",
+            "records":["123456.dv.googlehosted.com"]
+        },{
+            "id":"keybase",
+            "subdomain":"_keybase",
+            "type":"txt",
+            "ttl":"300",
+            "records":["keybase-site-verification=123456"]
+        },{
+            "id":"bing",
+            "subdomain":"bing-id",
+            "type":"cname",
+            "ttl":"300",
+            "records":["verify.bing.com"]
+        }
+    ]
+}

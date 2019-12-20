@@ -1,0 +1,16 @@
+{% set resource_name =domain|replace('.', '_') %}
+
+resource "aws_route53_zone" "{{ resource_name }}" {
+  name         = "{{ domain }}."
+  comment      = "{{ comment }}"
+}
+
+{% for record in records %}
+resource "aws_route53_record" "{{ record.id }}" {
+  zone_id = "${aws_route53_zone.{{ resource_name }}.zone_id}"
+  name    = "{{ record.subdomain }}{% if record.subdomain %}.{% endif %}{{ domain }}"
+  type    = "{{ record.type|upper }}"
+  ttl     = "{{ record.ttl }}"
+  records = {{ record.records|replace("'", '"') }}
+}
+{% endfor %}

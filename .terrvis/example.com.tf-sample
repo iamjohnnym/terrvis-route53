@@ -1,0 +1,47 @@
+
+
+resource "aws_route53_zone" "example_com" {
+  name         = "example.com."
+  comment      = "Managed by Terrvis"
+}
+
+
+resource "aws_route53_record" "gmail" {
+  zone_id = "${aws_route53_zone.example_com.zone_id}"
+  name    = "example.com"
+  type    = "MX"
+  ttl     = "300"
+  records = ["10 ALT3.ASPMX.L.GOOGLE.COM", "5 ALT2.ASPMX.L.GOOGLE.COM", "5 ALT1.ASPMX.L.GOOGLE.COM", "10 ALT4.ASPMX.L.GOOGLE.COM"]
+}
+
+resource "aws_route53_record" "root" {
+  zone_id = "${aws_route53_zone.example_com.zone_id}"
+  name    = "example.com"
+  type    = "A"
+  ttl     = "300"
+  records = ["185.199.111.153", "185.199.110.153", "185.199.109.153", "185.199.108.153"]
+}
+
+resource "aws_route53_record" "pagespeed" {
+  zone_id = "${aws_route53_zone.example_com.zone_id}"
+  name    = "123456.example.com"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["123456.dv.googlehosted.com"]
+}
+
+resource "aws_route53_record" "keybase" {
+  zone_id = "${aws_route53_zone.example_com.zone_id}"
+  name    = "_keybase.example.com"
+  type    = "TXT"
+  ttl     = "300"
+  records = ["keybase-site-verification=123456"]
+}
+
+resource "aws_route53_record" "bing" {
+  zone_id = "${aws_route53_zone.example_com.zone_id}"
+  name    = "bing-id.example.com"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["verify.bing.com"]
+}
